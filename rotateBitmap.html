@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+<script>
+//this sample uses the timer to rotate a bitmap around its center
+
+var stage, rect, img;		//declare global variables
+
+function init() {
+//this function is registered in the html body tag
+
+    stage = new createjs.Stage("demoCanvas");	//create a Stage object to work with the canvas element			
+    
+    img = new Image();				//create an Image object, then set its source property
+    img.src = 'green.jpg';
+    
+    img.onload = handleImageLoad;		//register a handler for the onload event     
+}
+
+function handleImageLoad(event) {
+//this function rus when the onload event completes
+    
+    rect = new createjs.Bitmap(img);	//create a Bitmap object, then set properties
+    rect.scaleX = .5;		
+    rect.scaleY = .5;
+    rect.x = 250;		
+    rect.y = 250;
+    
+    rect.regX = img.width/2;		//move registration point to center of bitmap
+    rect.regY = img.height/2;
+    
+    stage.addChild(rect);		//add the Bitmap object to the stage
+    
+    createjs.Ticker.setFPS(30);		//set the Ticker frame rate
+    createjs.Ticker.on("tick", tick);	//add a Ticker event listener; 1st parameter specifies the event type, 
+    					//2nd parameter registers the function that is called when the event fires
+}
+
+function tick(event) {
+//this function is called when the tick event fires
+
+    rect.rotation += 8;		//increments rotation by 8 degrees
+    stage.update(event);	//update the stage
+}
+
+//samples list: http://www.clarksoncs.com/JavaScriptSamples/EaselJS/easelJsSamplesIndex.html
+
+</script>
+</head>
+<body onLoad="init();">
+    
+    <!--add a canvas tag-->
+    <canvas id="demoCanvas" width="2000" height="2000"></canvas>
+</body>
+</html>

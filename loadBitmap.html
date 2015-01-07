@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>	<!--load the EaselJS library-->
+<script>
+//this sample displays a bitmap file
+
+var stage, img, map;		//declare global variables
+
+function init() {
+//this function is registered in the html body tag
+    
+    stage = new createjs.Stage("demoCanvas");	//create a Stage object to work with the canvas element
+    
+    img = new Image();				//create an Image object, then set its source property
+    img.src = 'chiwaukum.png';
+    
+    img.onload = handleImageLoad;		//register a handler for the onload event
+}
+
+function handleImageLoad(event) {
+//this function rus when the onload event completes
+
+    map = new createjs.Bitmap(img);		//create a Bitmap object, then set properties
+    map.x = 100;
+    map.y = 100;    
+       
+    stage.addChild(map);			//add the Bitmap object as a child of the stage, then update the stage
+    stage.update();
+}
+
+//samples list: http://www.clarksoncs.com/JavaScriptSamples/EaselJS/easelJsSamplesIndex.html
+
+</script>
+</head>
+<body onLoad="init();">
+
+    <!--add a canvas tag-->
+    <canvas id="demoCanvas" width="500" height="500"></canvas>
+
+</body>
+</html>

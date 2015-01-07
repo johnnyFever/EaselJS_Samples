@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+<script>
+//this sample displays text
+
+function init() {
+//this function is registered in the html body tag
+
+
+    var stage = new createjs.Stage("demoCanvas");				//create a Stage object to work with the canvas element
+    
+    var text = new createjs.Text("Hello World", "20px Arial", "black");		//create a Text object, then set properties of the Text object
+    text.x = 100;
+    text.y = 100;
+    text.maxWidth = 80;
+    
+    stage.addChild(text);							//add the Text object as a child of the stage, then update the stage
+    stage.update(event);
+}
+
+//samples list: http://www.clarksoncs.com/JavaScriptSamples/EaselJS/easelJsSamplesIndex.html
+
+</script>
+</head>
+<body onLoad="init();">
+
+    <!--add a canvas tag-->
+    <canvas id="demoCanvas" width="500" height="500"></canvas>
+
+</body>
+</html>
