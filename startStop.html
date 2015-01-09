@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+</head>
+
+<body>
+
+<input type='button' id='btnStart' class='input' value='Start'>
+<input type='button' id='btnStop' class='input' value='Pause'>
+<input type='button' id='btnReset' class='input' value='Resume'>
+<canvas id="demoCanvas" width="2000" height="2000"></canvas>
+
+<script>
+//this sample usess buttons to start, pause, and resume an EaselJS timer
+
+var stage = null, 
+    rect = null, 
+    img = null,
+    canvas = null,
+    context = null,
+    paused = false;
+
+window.onload = init();
+
+//load the art
+function init() {
+    
+    stage = new createjs.Stage("demoCanvas");		//create the Canvas and Stage objects
+    canvas = document.getElementById("demoCanvas");
+    context = canvas.getContext("2d");
+    
+    img = new Image();					//load the iamge file and register the event handler
+    img.src = 'green.jpg';
+    img.onload = handleLoadRect;         
+}
+
+//configure and display the rectangle
+function handleLoadRect() {
+
+    rect = new createjs.Bitmap(img);			//creat the Bitmap object and add it to the Stage
+    stage.addChild(rect);
+    
+    rect.scaleX = .1;					//set Bitmap object properties
+    rect.scaleY = .1;
+    rect.x = 100;
+    rect.y = 100;
+
+    stage.update();					//update the Stage object
+}
+
+//move the rectangle
+function tick(event) {
+
+    var endX = 600,
+        endY = 600;
+
+    paused = createjs.Ticker.getPaused();		//get the paused property
+    
+    //if 'paused' is false, then update
+    if (!paused) {
+        
+        if((rect.x < endX) && (rect.y < endY)) {	//move the image, or reset to start position
+            rect.x = rect.x + 1;
+            rect.y = rect.y + 1;
+        } else {
+            rect.x = 200;
+            rect.y = 200;    
+        }
+
+        stage.update(event);				//update the Stage object
+    }
+}
+
+//START button event handler
+//sets frames per second and starts the ticker    
+btnStart.addEventListener('click', function(e) { 
+    e.preventDefault(); 
+
+    createjs.Ticker.setFPS(10);				//set the Ticker frame rate and add a Ticker event listener
+    createjs.Ticker.on("tick", tick); 
+
+});
+
+//STOP button event handler
+//sets 'paused' to true
+btnStop.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    createjs.Ticker.setPaused(true);			//set the paused property to true
+
+});
+
+//RESET button event handler
+btnReset.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    createjs.Ticker.setPaused(false);			//get the paused property to false
+    tick(event);
+});
+
+</script>
+
+</body>
+</html>
